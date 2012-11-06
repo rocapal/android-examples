@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"    
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="#ffffff"
+	    
+	    >
+	    
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/titleLayouts"
+	        android:textColor="#000000"
+	        android:textSize="14dip"
+	        android:layout_marginBottom="20dip"
+	        android:layout_gravity="center"
+	    />
+	        
+	    
+	    <Button
+	        android:id="@+id/btFrame"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/frame"
+	    	android:layout_gravity="center"            
+	    />
+		
+	    <Button
+	        android:id="@+id/btLinearH"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/linearH"
+	        android:layout_gravity="center"
+	    />
+	       
+	    <Button
+	        android:id="@+id/btLinearV"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/linearV"
+	        android:layout_gravity="center"        
+	    />
+	       
+	    <Button
+	        android:id="@+id/btRelative"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/relative"
+	        android:layout_gravity="center"        
+	    />
+	    
+	    <Button
+	        android:id="@+id/btTable"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/table"
+	        android:layout_gravity="center"       
+	    />
+	    
+	    <Button
+	        android:id="@+id/btCard"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/social"
+	        android:layout_gravity="center"       
+	    />
+	    
+	</LinearLayout>
+
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text ="@string/license"
+        android:textColor="#000000"
+        android:textSize="10dip"
+        android:layout_alignParentBottom="true"        
+	/>
+
+</RelativeLayout>	
+

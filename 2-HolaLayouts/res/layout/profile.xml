@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--   <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+-->
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/relative_main"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="#0000ff"
+	    >
+	    
+	    <TextView  
+	        android:id="@+id/main"
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"    
+	        android:text="@string/titulo" 
+	        android:gravity="center"
+	       	android:layout_marginTop="10dip"
+	        android:layout_marginBottom="10dip"
+	        android:textColor="#000000"
+	     />
+	     
+	     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:background="#00ff00"
+		    android:layout_below="@id/main"	   
+		    android:id="@+id/lay_user"	    
+		  >
+		  
+		  	<ImageView
+				android:id="@+id/imgUser"
+				android:contentDescription="@string/contentImage"
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content" 
+				android:background="@drawable/user"
+				android:layout_marginTop="10dip"
+				android:layout_marginBottom="10dip"
+			/>
+	
+			<TextView  
+		        android:id="@+id/name"
+		        android:layout_width="fill_parent" 
+		        android:layout_height="wrap_content"    
+		        android:text="@string/nombre"           
+		        android:layout_toRightOf="@+id/imgUser"
+		       	android:layout_marginTop="10dip"
+		        android:gravity="center"	
+		        android:textColor="#000000"        
+	        />
+	        
+	        <TextView  
+		        android:id="@+id/status2"
+		        android:layout_width="fill_parent" 
+		        android:layout_height="wrap_content"    
+		        android:text="@string/status"	             
+		        android:layout_toRightOf="@+id/imgUser"
+		        android:layout_below="@+id/name"
+		       	android:layout_marginTop="10dip"
+		        android:layout_marginLeft="10dip"
+		        android:layout_marginRight="10dip"
+		        android:layout_marginBottom="10dip"
+		        android:textColor="#000000"	         
+		        android:maxLines="3"
+	        />        
+		  
+		  </RelativeLayout>
+		  
+		  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="#00fff0"
+		    android:layout_below="@+id/lay_user"
+		    android:orientation="vertical"
+		    android:id="@+id/lay_buttons"
+		  >
+		  	
+		  	 <Button
+			     android:layout_height="wrap_content"
+			     android:layout_width="fill_parent"
+			     android:layout_marginTop="10dip"
+		         android:layout_marginLeft="10dip"
+		         android:layout_marginRight="10dip"
+			     android:text="@string/bt1"
+			 />
+			 
+			 <Button
+			     android:layout_height="wrap_content"
+			     android:layout_width="fill_parent"
+			     android:layout_marginTop="10dip"
+		         android:layout_marginLeft="10dip"
+		         android:layout_marginRight="10dip"
+			     android:text="@string/bt2"
+			 />
+			 
+			 <Button
+			     android:layout_height="wrap_content"
+			     android:layout_width="fill_parent"
+			     android:layout_marginTop="10dip"
+		         android:layout_marginLeft="10dip"
+		         android:layout_marginRight="10dip"
+		         android:layout_marginBottom="10dip"
+			     android:text="@string/bt3"
+			 />
+		  
+	      </LinearLayout>
+	      
+	      <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:background="#455400"
+		    android:layout_below="@+id/lay_user"
+		    android:layout_toRightOf="@+id/lay_buttons"
+		    android:orientation="vertical"
+		    android:id="@+id/lay_map"
+		  >
+		  
+		  	 <ImageView
+		  	    
+				android:id="@+id/imgMap"
+				android:contentDescription="@string/contentImage"
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content" 
+				android:background="@drawable/maps"
+				android:layout_marginTop="10dip"
+				android:layout_marginBottom="10dip"
+				android:layout_gravity="center"
+				
+			 />
+		  
+		  	<Button
+			     android:layout_height="wrap_content"
+			     android:layout_width="wrap_content"
+			     android:layout_marginTop="10dip"
+				 android:layout_gravity="center"
+		         android:layout_marginBottom="10dip"
+			     android:text="@string/localizame"
+			     android:id="@+id/btLocalizame"
+			 />
+			 
+	  </LinearLayout>
+	  
+	  
+	 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="#435320"
+		    android:layout_alignParentBottom="true"	   
+		    android:layout_below="@+id/lay_map"
+		    android:id="@+id/lay_foo"
+		    
+		  >	     
+	  	 <TextView
+				android:id="@+id/tvSessionsInfo"
+				android:layout_centerVertical="true"
+				android:layout_width="wrap_content" 
+	       		android:layout_height="wrap_content"								
+				android:singleLine="true"
+				android:ellipsize="marquee"							
+				android:text="@string/texto_largo"
+			    android:textStyle="bold"
+				android:textColor="#ff0000"		
+				android:layout_alignParentBottom="true"	
+		   >
+		   </TextView>
+		</RelativeLayout>
+	     
+	</RelativeLayout>
+

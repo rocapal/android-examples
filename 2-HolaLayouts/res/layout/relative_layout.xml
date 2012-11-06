@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+    <TextView  
+        android:id="@+id/hello"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:text="@string/hello"
+    />
+        
+    <TextView
+		android:id="@+id/black_on_red"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/hello"
+		android:background="#ff0000"
+		android:textColor="#000000"
+		android:text="black on red"
+	/>
+	
+    <TextView
+	android:id="@+id/update_me"
+	android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/black_on_red"
+        android:background="#00ff00"
+	android:textColor="#000000"
+	android:text="update Text"
+	/> 
+	
+    <TextView
+	android:id="@+id/left_wrap"
+	android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/update_me"
+        android:background="#0000ff"
+	android:textColor="#000000"
+	android:text="wrap"
+	/>
+    
+    <TextView
+	android:id="@+id/right_fill"
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/update_me"
+    android:layout_toRightOf="@id/left_wrap"
+    android:background="#ff0000"
+	android:textColor="#000000"
+	android:text="fill"
+	/>
+	
+	
+	
+</RelativeLayout>

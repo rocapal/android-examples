@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="app_name">HolaLayouts</string>
+    <string name="hello">Hola mundo</string>
+    
+    <string name="titleLayouts">Ejemplos de Layouts</string>
+    <string name="frame">FrameLayout</string>
+    <string name="linearH">LinearLayout Horizontal</string>
+    <string name="linearV">LinearLayout Vertical</string>
+    <string name="relative">RelativeLayout</string>
+    <string name="table">TableLayout</string>
+    <string name="social">Ficha</string>
+    
+    <string name="license">Copyright &#169; Roberto Calvo Palomino\nEstos ejemplos y su código fuente está licenciados bajo GPLv3 (http://www.gnu.org/licenses/). Open Source Software!</string>
+    
+    
+    <string name="textoprueba">Texto de prueba</string>
+	<string name="textoboton">Boton</string>
+	<string name="textoframe">Hola que tal como estás. Este texto aparece encima del botón</string>
+	<string name="textolargo_boton">Boton con texto largo</string>
+	
+	<string name="texto_row">Texto tabla</string>
+	
+	<string name="titulo">Título Centrado</string>
+	<string name="contentImage">user</string>
+	<string name="nombre">Nombre de usuario</string>
+	
+	<string name="status">Descripción del estado del usuario que ocupa 2 o 3 líneas completas</string>	
+	<string name="bt1">Ver Perfil</string>
+	<string name="bt2">Cargar Info</string>
+	<string name="bt3">Actualizar</string>
+	<string name="localizame">Localizame!</string>
+	<string name="texto_largo">Este es un ejemplo de texto largo encapsulado en un TextView en modo marquesina</string>
+	
+</resources>
