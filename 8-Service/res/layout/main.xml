@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="#ffffff">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="#ffffff"
+	    
+	>
+	    
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:text="@string/app_name"
+	        android:layout_marginBottom="20dip"
+	        tools:context=".Main" />
+	    
+	    
+	    <Button
+		        android:id="@+id/btStart"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text = "@string/start"
+		        android:layout_gravity="center"
+		        android:layout_marginBottom="20dip"
+		    />
+	    
+	     <Button
+		        android:id="@+id/btStop"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text = "@string/stop"
+		        android:layout_gravity="center"
+		        android:layout_marginBottom="20dip"
+		    />
+	     
+	      <TextView
+	            android:id="@+id/tvDate"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center"		        
+		        android:layout_marginBottom="20dip"
+		        />
+	       	    
+	</LinearLayout>
+
+	 <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text ="@string/license"
+        android:textColor="#000000"
+        android:textSize="10dip"
+        android:layout_alignParentBottom="true"        
+	/>    
+
+</RelativeLayout>
