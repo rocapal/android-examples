@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="app_name">AsyncTask-ProgressDialog</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">AsyncTask-ProgressDialog</string>
+
+    <string name="download_file">Download file</string>
+    
+    <string name="license">Copyright &#169; Roberto Calvo Palomino\nEstos ejemplos y su código fuente está licenciados bajo GPLv3 (http://www.gnu.org/licenses/). Open Source Software!</string>
+    
+    
+</resources>
