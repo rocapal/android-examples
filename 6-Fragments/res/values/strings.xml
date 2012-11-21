@@ -1,0 +1,20 @@
+<resources>
+
+    <string name="app_name">Fragments</string>
+    <string name="hello_world">Hello Fragments!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Fragments</string>
+    <string name="button_show">Show Fragment</string>
+    <string name="button_hide">Hide Fragment</string>
+    
+    <string name="license">Copyright &#169; Roberto Calvo Palomino\nEstos ejemplos y su código fuente está licenciados bajo GPLv3 (http://www.gnu.org/licenses/). Open Source Software!</string>
+    
+    <string name="title">Fragments</string>
+    
+    
+    <string name="fragment">Fragment Activity</string>
+    <string name="fragmentDialog">Fragment Dialog</string>
+    <string name="fragmentList">Fragment List</string>
+	<string name="fragmentTabletList">Fragment List (tablet)</string>
+
+</resources>
