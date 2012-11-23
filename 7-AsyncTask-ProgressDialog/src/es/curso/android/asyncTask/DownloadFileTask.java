@@ -123,10 +123,11 @@ public class DownloadFileTask extends AsyncTask<URI, Integer, Void>{
 		try {
 			output = new FileOutputStream(destination);
 		} catch (IOException ex) {
-			Log.d(TAG, "Error opening destination file: " + ex.getMessage());
+			Log.e(TAG, "Error opening destination file: " + ex.getMessage());
+			return null;
 		}
 
-		final byte data[] = new byte[1024];
+		final byte data[] = new byte[4096];
 		long total = 0;
 		int count;
 		while ((count = input.read(data)) != -1) {

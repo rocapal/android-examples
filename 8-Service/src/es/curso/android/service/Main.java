@@ -74,6 +74,13 @@ public class Main extends Activity {
         
         
     }
+    
+    @Override
+    public void onDestroy()
+    {
+    	super.onDestroy();
+    	stopService(new Intent(Main.this, MyService.class));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

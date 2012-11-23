@@ -19,4 +19,5 @@
     <string name="title3">Maru Sushi Bar</string>
     <string name="description3">MARU Sushi Bar se especializa en la elaboración de comida coreana y japonesa, destacando por la variedad de sushi-maki y Gyoza</string>
     
+    <string name="banner">Encabezado de la activity! No pertece a la lista!</string>
 </resources>

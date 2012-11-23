@@ -56,11 +56,11 @@ public class AdvanceList extends ListActivity
     public void onCreate(Bundle savedInstanceState) 
 	{
         super.onCreate(savedInstanceState);                       
-        
+        setContentView(R.layout.list);
         setData();
         
         mAdapter = new MyAdapter(this);
-		setListAdapter(mAdapter);			   
+        setListAdapter(mAdapter);			   
 	    	   
 	}
 	
@@ -111,6 +111,8 @@ public class AdvanceList extends ListActivity
             mynode3.mImageResource = R.drawable.r3;
 
             mArray.add(mynode3);
+            
+            mArray.addAll(mArray);
 
     }
 

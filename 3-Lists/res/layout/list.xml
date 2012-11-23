@@ -3,12 +3,21 @@
 <LinearLayout android:id="@+id/LinearLayout01"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
+	android:orientation="vertical"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	
+    <TextView 
+	    android:id="@+id/tvTexto"
+	    android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/banner" 	  
+		android:color="#000000"
+		android:background="#ffffff"  
+	 />
     
 	<ListView android:id="@id/android:list"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" 
-	/>
+		android:layout_height="wrap_content"
+	/>		
 	
 </LinearLayout>
