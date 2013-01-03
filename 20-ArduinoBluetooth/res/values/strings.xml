@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ArduinoBluetooth</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    
+    
+     <string name="title">Bluetooth Devices</string>
+     <string name="button_disconnect">Disconnect</string>
+     
+     <string name="bt_connecting">Connecting ... </string>
+     <string name="bt_connected">Connected to </string>
+     <string name="bt_not_connected">NOT Connected to </string>
+     
+     <string name="bt_resource_busy">You have already made a BT connection</string>
+
+</resources>
