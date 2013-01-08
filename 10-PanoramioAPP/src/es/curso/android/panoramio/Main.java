@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,6 +43,8 @@ public class Main extends ListActivity {
 		super.onCreate(savedInstanceState);
 		
 		
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitNetwork().build();
+		StrictMode.setThreadPolicy(policy); 
 		
 		GetJSONTask task = new GetJSONTask();
 		task.execute("http://rest.libregeosocial.org/social/layer/560/search/?search=&latitude=40.41687&longitude=-3.70320&radius=1.0&category=0&elems=20&format=JSON",
@@ -109,8 +112,9 @@ public class Main extends ListActivity {
 	    }
 		
 	}
+
 	
-	
+
 	
 	protected void onListItemClick(ListView l, View v, int position, long id) 
 	{
@@ -129,12 +133,7 @@ public class Main extends ListActivity {
         setListAdapter(mAdapter);	
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+
 		
 	public static Bitmap getBitmapFromURL(String urlBitmap) {
 	    try {
@@ -200,8 +199,9 @@ public class Main extends ListActivity {
 			tTitle.setText(mList.get(position).name);
 		
 			ImageView image = (ImageView) view.findViewById(R.id.image);
-			image.setImageBitmap(getBitmapFromURL(mList.get(position).thumb_url));						
-						
+			image.setImageBitmap(mList.get(position).getPhotoThumb());						
+									
+
 			return view;
 		}
 	

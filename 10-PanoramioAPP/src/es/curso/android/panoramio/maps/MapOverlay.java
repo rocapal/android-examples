@@ -49,14 +49,16 @@ public class MapOverlay extends Overlay {
 		   mMarker = draw;
 	   }
 	   
+	   
+	   
 	   @Override
 	   public void draw(Canvas canvas, MapView mapView, boolean shadow) {
          if (!shadow) {
          		   	  
      		
 	   	     // Make sure to give mMarker bounds so it will draw in the overlay
-	   	     final int intrinsicWidth = mMarker.getIntrinsicWidth();
-	   	     final int intrinsicHeight = mMarker.getIntrinsicHeight();
+	   	     final int intrinsicWidth = 70; //mMarker.getIntrinsicWidth();
+	   	     final int intrinsicHeight = 70; //mMarker.getIntrinsicHeight();
 	   	     mMarker.setBounds(0, 0, intrinsicWidth, intrinsicHeight);
 	   	        
 	   	     mMarkerXOffset = -(intrinsicWidth / 2);
@@ -72,8 +74,6 @@ public class MapOverlay extends Overlay {
              p.toPixels(mGeoPoint, point2);
              
              
-     		
-             canvas.drawText("Aquí estoy!", point2.x - intrinsicWidth , point2.y + intrinsicHeight, paint);
              super.draw(canvas, mapView, shadow);
              drawAt(canvas, mMarker, point2.x + mMarkerXOffset, point2.y + mMarkerYOffset, shadow);
            

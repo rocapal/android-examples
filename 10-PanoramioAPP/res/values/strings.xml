@@ -6,4 +6,7 @@
     <string name="menu_settings">Settings</string>
     <string name="map_key">0Tp7WsIDiyqoDmSF9LMprvDzte-hj_A6r-qxbow</string>
     
+    <string name="menuPhoto">Ver Foto</string>
+    <string name="menuURL">Ir URL</string>
+    <string name="menuShare">Compartir</string>
 </resources>
