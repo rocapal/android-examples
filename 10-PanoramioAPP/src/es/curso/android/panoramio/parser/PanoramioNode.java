@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 
 public class PanoramioNode implements Parcelable
@@ -56,13 +57,21 @@ public class PanoramioNode implements Parcelable
 		latitude = (Double) in.readDouble();
 		longitude = (Double) in.readDouble();
 		
+		
+		
+		
 		//Read bitmaps
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		int b;
+
 		while((b = in.readByte()) != -1)
 			byteStream.write(b);
-		byte bitmapBytes[] = byteStream.toByteArray();
-		mPhotoThumb = BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length);
+		
+		if (byteStream.size() > 0)
+		{
+			byte bitmapBytes[] = byteStream.toByteArray();
+			mPhotoThumb = BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length);
+		}
 		
 	}
 	
@@ -119,11 +128,16 @@ public class PanoramioNode implements Parcelable
 		out.writeDouble(latitude);
 		out.writeDouble(longitude);	
 
-		// Write Bitmap
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();		
-		mPhotoThumb.compress(Bitmap.CompressFormat.PNG, 0, byteStream);
-		byte bitmapBytes[] = byteStream.toByteArray();
-		out.writeByteArray (bitmapBytes, 0, bitmapBytes.length);
+
+		// Write Bitmap		
+		if (mPhotoThumb != null)
+		{
+			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();		
+			mPhotoThumb.compress(Bitmap.CompressFormat.PNG, 0, byteStream);
+			byte bitmapBytes[] = byteStream.toByteArray();
+			out.writeByteArray (bitmapBytes, 0, bitmapBytes.length);
+		}
+		
 	}
 	
 	
