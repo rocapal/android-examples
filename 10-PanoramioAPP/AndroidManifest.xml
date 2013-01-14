@@ -28,8 +28,8 @@
         </activity>
         
         <uses-library android:name="com.google.android.maps" />
-        <activity android:name=".maps.Map"></activity>
-        <service android:name="es.curso.androd.panoramio.service.LocService"></service>
+        <activity android:name="es.curso.android.panoramio.maps.Map"></activity>
+        <service android:name=".service.LocService"></service>
         
     </application>
 
