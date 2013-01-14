@@ -50,11 +50,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import es.curso.androd.panoramio.service.ILocService;
-import es.curso.androd.panoramio.service.LocService;
 import es.curso.android.panoramio.maps.Map;
 import es.curso.android.panoramio.parser.JSONParser;
 import es.curso.android.panoramio.parser.PanoramioNode;
+import es.curso.android.panoramio.service.ILocService;
+import es.curso.android.panoramio.service.LocService;
 
 public class Main extends ListActivity {
 

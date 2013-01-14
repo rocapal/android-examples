@@ -20,7 +20,7 @@
  */
 
 
-package es.curso.androd.panoramio.service;
+package es.curso.android.panoramio.service;
 
 import java.util.ArrayList;
 
