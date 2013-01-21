@@ -41,6 +41,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +63,10 @@ public class Main extends ListActivity {
 	// Wigdets
 	private TextView tvStatus;	
 	private Button btDisconnect;
-	private ImageButton ibLed;
+	private ImageButton ibLed, ibDoor;
+	private TextView tvLog;
+	private ScrollView sv;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
@@ -105,6 +109,10 @@ public class Main extends ListActivity {
 		mAdapter = new MyAdapter(this);
 		tvStatus = (TextView) this.findViewById(R.id.tvStatus);
 		
+		tvLog = (TextView) this.findViewById(R.id.tvLog);
+		
+		sv = ((ScrollView) findViewById(R.id.sv));
+		
 		btDisconnect = (Button) this.findViewById(R.id.btDisconnect);
 		btDisconnect.setOnClickListener( new OnClickListener() {
 			
@@ -116,6 +124,7 @@ public class Main extends ListActivity {
 					mArduinoBT = null;
 					
 					tvStatus.setText("");
+					screenlog("Disconnected!");
 				}				
 			}
 		});
@@ -125,12 +134,39 @@ public class Main extends ListActivity {
 			
 			@Override
 			public void onClick(View v) {
-				if (mArduinoBT != null)				
-					mArduinoBT.send("R");				
+				if (mArduinoBT != null)
+				{
+					screenlog("Sending LedBlink Byte: 'L'");
+					mArduinoBT.send("L");						
+				}
 				
 			}
 		});
 		
+		ibDoor = (ImageButton) this.findViewById(R.id.btDoor);
+		ibDoor.setOnClickListener( new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (mArduinoBT != null)
+				{	
+					screenlog("Sending DoorSensor Byte: 'D'");
+					mArduinoBT.send("D");					
+										
+					byte[] response = new byte[1];
+					response = mArduinoBT.receive(1);
+					if (response == null)
+					{
+						screenlog("Receiving DoorSensor: Error - NULL");
+					}
+					else
+					{
+						screenlog("Receiving DoorSensor: " + (response[0]==0 ? "Open (0)" : "Close (1)") );
+					}
+				}
+				
+			}
+		});
 	}
 	
 	@Override
@@ -147,7 +183,10 @@ public class Main extends ListActivity {
 			
 			mArduinoBT = new ArduinoBT(bDevice);
 			if (mArduinoBT.connect())
+			{
 				tvStatus.setText(getResources().getString(R.string.bt_connected) + " " + bDevice.getName() );
+				screenlog("Connected to " + bDevice.getName() );
+			}
 			else
 				tvStatus.setText(getResources().getString(R.string.bt_not_connected) + " " + bDevice.getName() );
 		}
@@ -175,9 +214,25 @@ public class Main extends ListActivity {
 			}
 	}
 	
+	private void screenlog (String log)
+	{
+		tvLog.setText(tvLog.getText() + "\n" + log);
+		
+		// Each time you change the TextView 
+		// you must force the FOCUS_DOWN of ScrollView
+		sv.post(new Runnable() 
+		{
+	         public void run() {
+	             ((ScrollView) findViewById(R.id.sv)).fullScroll(View.FOCUS_DOWN);
+	         }
+		});
+	}
 
 	private void startScan ()
 	{
+				
+		screenlog("Scanning devices ...");
+		
 		mProgressDialog = ProgressDialog.show(this, "BT Scan", "Scanning devices ...");
 		mBluetoothAdapter.startDiscovery(); 
 		
@@ -198,6 +253,9 @@ public class Main extends ListActivity {
 				}
 				else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
 					Log.d(TAG, "Scan finished!");
+					
+					screenlog("Scan finished! Found " + String.valueOf(mDeviceList.size()) + " devices" );
+					
 					mProgressDialog.dismiss();										
 					
 					setListAdapter(mAdapter);

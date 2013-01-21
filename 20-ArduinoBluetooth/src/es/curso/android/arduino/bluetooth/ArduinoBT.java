@@ -81,5 +81,20 @@ public class ArduinoBT {
 		} catch (IOException e) {
 			Log.e(TAG, e.getMessage());			
 		}
+				
+	}
+	
+	public byte[] receive (int numBytes)
+	{
+		byte[] b = new byte[numBytes];
+		try {
+			mmInputStream.read(b,0,numBytes);
+			Log.e(TAG, "Recv: " + String.valueOf(b[0]));
+			return b;
+			
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage());		
+			return null;
+		}
 	}
 }

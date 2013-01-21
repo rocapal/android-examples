@@ -48,6 +48,7 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal"
+	    android:layout_gravity="center"
 	    
 	    >
     
@@ -55,9 +56,34 @@
 	        android:id="@+id/btLed"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"  
-	        android:src="@drawable/yellowred"        
-        	/>        	   
+	        android:src="@drawable/yellowred"
+        	/>  
+        	
+        <ImageButton 
+	        android:id="@+id/btDoor"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"  
+	        android:src="@drawable/doorsensor"
+	        android:layout_gravity="center"
+	                
+        	/>  	   
 	    
     </LinearLayout>
+    
+     <ScrollView
+         android:id="@+id/sv"
+         android:scrollbars="vertical"
+         android:layout_width="fill_parent"
+	     android:layout_height="fill_parent">
+        
+	     <TextView
+	        android:id="@+id/tvLog"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"  
+	        android:inputType="none"
+	        android:selectAllOnFocus="false"
+	        
+	     />
+     </ScrollView>
 
 </LinearLayout>
