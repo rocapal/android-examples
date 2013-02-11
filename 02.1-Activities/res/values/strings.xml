@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Activities</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+
+     <string name="license">Copyright &#169; Roberto Calvo Palomino\nEstos ejemplos y su código fuente está licenciados bajo GPLv3 (http://www.gnu.org/licenses/). Open Source Software!</string>
+    
+     <string name="titleMainActivity">Activities</string>
+     <string name="button1_text">Go Activity 1 (stack)</string>
+     <string name="button2_text">Go Activity 2</string>
+     <string name="button3_text">Go Activity 3</string>
+     <string name="button4_text">Go Browser</string>
+     <string name="button5_text">Go Call</string>
+</resources>

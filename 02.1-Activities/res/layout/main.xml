@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"    
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:background="#ffffff"
+	    
+	    >
+	    
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/titleMainActivity"
+	        android:textColor="#000000"
+	        android:textSize="14dip"
+	        android:layout_marginBottom="20dip"
+	        android:layout_gravity="center"
+	    />
+	        
+	       	    
+	    <Button
+	        android:id="@+id/bt1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/button1_text"
+	        android:layout_gravity="center"       
+	    />
+	    
+	    <Button
+	        android:id="@+id/bt2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/button2_text"
+	        android:layout_gravity="center"       
+	    />
+	    
+	    <Button
+	        android:id="@+id/bt3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/button3_text"
+	        android:layout_gravity="center"       
+	    />
+	    
+	    <Button
+	        android:id="@+id/bt4"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/button4_text"
+	        android:layout_gravity="center"       
+	    />
+	    
+	    <Button
+	        android:id="@+id/bt5"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/button5_text"
+	        android:layout_gravity="center"       
+	    />
+	    
+	</LinearLayout>
+
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text ="@string/license"
+        android:textColor="#000000"
+        android:textSize="10dip"
+        android:layout_alignParentBottom="true"        
+	/>
+
+</RelativeLayout>	
