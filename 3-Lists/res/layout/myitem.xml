@@ -9,7 +9,7 @@
 >
 
     	<TextView
-	    	android:id="@+id/title"
+	    	android:id="@+id/title2"
 	 		android:layout_width="fill_parent" 
 		    android:layout_height="wrap_content" 
 		    android:textSize="14dip"

@@ -24,7 +24,11 @@ package es.curso.android.lists;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -60,12 +64,46 @@ public class SimpleList extends ListActivity {
         
         lv1.setAdapter(la1);
         
+        registerForContextMenu(this.getListView());
+      
 	}
 	
 	 protected void onListItemClick (ListView l, View v, int position, long id) 
 	 {	 		 
 		 
-		 Toast.makeText(this, testValues[position], Toast.LENGTH_SHORT).show();
+		 Toast.makeText(this, String.valueOf(position) + " - " +
+				 			  testValues[position], 
+				 			Toast.LENGTH_SHORT).show();
+		
 	 }
-	
+
+	 @Override
+	 public void onCreateContextMenu(ContextMenu menu, View view,  ContextMenuInfo menuInfo)
+	 {
+		
+			 menu.add (0, 1, 0, "Change");
+			 	
+     }
+
+	 @Override
+     public boolean onContextItemSelected(MenuItem item)
+     {
+
+             AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();            
+             //Log.e("FriendList", String.valueOf(info.position));
+
+
+             switch (item.getItemId()) {
+
+                     case 1:
+                    	 testValues[info.position] = "Change";
+                    	 ;
+                    	 break;
+             }
+             
+             return true;
+     }
 }
+
+
+

@@ -23,9 +23,11 @@ package es.curso.android.lists;
 
 
 import java.util.ArrayList;
+
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +62,7 @@ public class AdvanceList extends ListActivity
         setData();
         
         mAdapter = new MyAdapter(this);
-        setListAdapter(mAdapter);			   
+        setListAdapter(mAdapter);	                
 	    	   
 	}
 	
@@ -70,6 +72,7 @@ public class AdvanceList extends ListActivity
     	// Create a new intent to call other Activity. 
     	// Using the methods "putExtra" we can
     	// send data to the new activity
+    	   	
     	
     	Toast.makeText(this, mArray.get(position).mTitle, Toast.LENGTH_SHORT).show();
 	}
@@ -112,10 +115,39 @@ public class AdvanceList extends ListActivity
 
             mArray.add(mynode3);
             
-            mArray.addAll(mArray);
+           // mArray.addAll(mArray);
 
     }
 
+    public static class MyAdapter2 extends BaseAdapter
+    {
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+    	
+    }
+    
     
 	
 	public static class MyAdapter extends BaseAdapter 
@@ -148,19 +180,20 @@ public class AdvanceList extends ListActivity
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			
+			Log.d("TAG", "position " + String.valueOf(position));
 			View view = null;
-				
-			if (convertView == null) {
-				// Make up a new view
+		
+			if (convertView == null)
+			{
+			
 				LayoutInflater inflater = (LayoutInflater) mContext
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				
 				view = inflater.inflate(R.layout.myitem2, null);
-			} else {
-				// Use convertView if it is available
-				view = convertView;
 			}
-							
+			else
+				view = convertView;
+			
 			
 			// Example to get an image resource	
 			ImageView img = (ImageView) view.findViewById(R.id.image);

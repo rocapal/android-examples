@@ -40,6 +40,14 @@
 	        android:text = "@string/advlist"
 	        android:layout_gravity="center"
 	    />
+	    
+	    <Button
+	        android:id="@+id/btTwoLists"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text = "@string/twolists"
+	        android:layout_gravity="center"
+	    />
 	       	    
 	</LinearLayout>
 

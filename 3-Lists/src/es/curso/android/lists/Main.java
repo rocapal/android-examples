@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class Main extends Activity {
@@ -33,7 +34,7 @@ public class Main extends Activity {
 	// Esta variable es un atributo de clase y su contexto es toda la clase
 	// Cualquier método de esta clase puede acceder a él
 	
-	private Button btList, btAdvList;
+	private Button btList, btAdvList, bt2Lists;
 	
 	
 	@Override
@@ -51,13 +52,13 @@ public class Main extends Activity {
 		
 		// Obtenemos instancias del XML
 		btList = (Button) findViewById(R.id.btList);
-		btAdvList = (Button) findViewById(R.id.btAdvlist);		
+		btAdvList = (Button) findViewById(R.id.btAdvlist);	
+		bt2Lists = (Button) findViewById(R.id.btTwoLists);	
 		
 		//Asignamos listener a los botones
 		btList.setOnClickListener(getOnClickDoSomething(1));
 		btAdvList.setOnClickListener(getOnClickDoSomething(2));
-				
-		
+		bt2Lists.setOnClickListener(getOnClickDoSomething(3));				
 	}	
 	
 	// Este método lanza una nueva actividad dependiendo del parámetro
@@ -69,6 +70,8 @@ public class Main extends Activity {
 			i = new Intent(this, SimpleList.class);
 		else if (list == 2)
 			i = new Intent(this, AdvanceList.class);
+		else if (list == 3)
+			i = new Intent(this, TwoLists.class);
 		
 		if (i!=null)
 			startActivity(i);
@@ -86,5 +89,7 @@ public class Main extends Activity {
 			}
 	    };
 	}
+	
+	
 	
 }
