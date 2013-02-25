@@ -32,11 +32,13 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-public class MyService extends Service 
+	public class MyService extends Service 
 {
 	private final String TAG = getClass().getSimpleName();
-	private static IMyService Iservice;
+	private static IMyService Iservice = null;
 	private Boolean run = false;
+	
+	private Integer mTemp;
 	
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -50,9 +52,14 @@ public class MyService extends Service
 		run = true;
 		Log.d(TAG, "Init service");
 		
-		Toast.makeText(Main.context, "Init Service", Toast.LENGTH_SHORT).show();
+		mTemp = 0;
+		
+		Toast.makeText(getApplicationContext(), "Init Service", Toast.LENGTH_SHORT).show();
         initService();
+                
     }		
+		
+	
 	
 	
 	public static void regListener (IMyService iMyService)
@@ -63,6 +70,9 @@ public class MyService extends Service
 	private void initService () 
 	{
 		
+		//for (;;)
+		//	Log.d("TAG", "holas");
+		
 		/* The logic of this method is your responsability: 
 		    - You can wait for a listener (GPS)
 		    - You can wait for a system event/intent
@@ -72,7 +82,8 @@ public class MyService extends Service
 		  get the dateTime to show in the main activity
 		*/ 
 		
-		Handler myHandler = new DoSomething();
+		
+		DoSomething myHandler = new DoSomething();
 		myHandler.sendMessageDelayed(new Message(), 3000);			
 		
 	}
@@ -81,10 +92,24 @@ public class MyService extends Service
 		@Override
 		public void handleMessage(Message msg) {
 			
-			String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-			Iservice.updateTime(mydate);
-			if (run)
-				initService();
+			if (Iservice != null)
+			{
+				mTemp = mTemp + 1;
+				String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+				Iservice.updateTime(mydate);
+				Iservice.updateTemp(String.valueOf(mTemp));
+				if (run)
+					initService();
+				
+			}
+			else
+			{
+				Toast.makeText(getApplicationContext(), "[BOOT] Message from service", Toast.LENGTH_SHORT).show();
+				if (run)
+					initService();
+			}
+			
+			
 		}
 	}
 	
@@ -93,8 +118,8 @@ public class MyService extends Service
 		super.onDestroy();
 		run = false;
 		Log.d(TAG, "Stop service");
-		Toast.makeText(Main.context, "Stop Service", Toast.LENGTH_SHORT).show();
-		
+		Toast.makeText(getApplicationContext(), "Stop Service", Toast.LENGTH_SHORT).show();
+				
 	}
 	
 

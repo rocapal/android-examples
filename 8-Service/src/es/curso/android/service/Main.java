@@ -35,6 +35,7 @@ import android.widget.TextView;
 public class Main extends Activity {
 
 	public static Context context;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,10 @@ public class Main extends Activity {
         context = this;
         
         final TextView tvDate = (TextView) this.findViewById(R.id.tvDate);
+        final TextView tvTemp = (TextView) this.findViewById(R.id.tvTemp);
+
+        
+        
         
         Button btStart = (Button) this.findViewById(R.id.btStart);
         btStart.setOnClickListener(new OnClickListener() {
@@ -50,15 +55,22 @@ public class Main extends Activity {
 			@Override
 			public void onClick(View v) {
 				
+			
 				MyService.regListener(new IMyService() {
 					
 					@Override
 					public void updateTime(String time) {
 						tvDate.setText(time);						
 					}
+
+					@Override
+					public void updateTemp(String temp) {
+						tvTemp.setText(temp);
+						
+					}
 				});
 
-				startService(new Intent(Main.this, MyService.class));				
+				startService(new Intent(getApplicationContext(), MyService.class));				
 				
 			}
 		});
@@ -68,7 +80,7 @@ public class Main extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				stopService(new Intent(Main.this, MyService.class));
+				stopService(new Intent(getApplicationContext(), MyService.class));
 			}
 		});
         

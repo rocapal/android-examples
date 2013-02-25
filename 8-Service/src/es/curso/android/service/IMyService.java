@@ -24,4 +24,6 @@ package es.curso.android.service;
 public interface IMyService {
 
 	public void updateTime (String time);
+	
+	public void updateTemp (String temp);
 }
