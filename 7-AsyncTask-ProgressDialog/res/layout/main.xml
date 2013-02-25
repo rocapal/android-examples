@@ -13,6 +13,7 @@
 	>
 	    
 	    <TextView
+	        android:id="@+id/tvTitle"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center"
@@ -28,7 +29,39 @@
 		        android:text = "@string/download_file"
 		        android:layout_gravity="center"
 		    />
-	       	    
+	     
+	    <Button
+		        android:id="@+id/btTest"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text = "@string/button_test"
+		        android:layout_gravity="center"
+		    />
+	    
+	     <Button
+		        android:id="@+id/btTimerTask"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text = "@string/button_timertask"
+		        android:layout_gravity="center"
+		    />
+	     
+	      <Button
+		        android:id="@+id/btThread"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text = "@string/button_thread"
+		        android:layout_gravity="center"
+		    />
+	      
+	      <Button
+		        android:id="@+id/btThreadHandler"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text = "@string/button_thread_handler"
+		        android:layout_gravity="center"
+		    />
+	    	    
 	</LinearLayout>
 
 	 <TextView 

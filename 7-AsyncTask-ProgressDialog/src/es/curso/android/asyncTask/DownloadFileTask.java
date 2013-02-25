@@ -37,7 +37,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
-public class DownloadFileTask extends AsyncTask<URI, Integer, Void>{
+public class DownloadFileTask extends AsyncTask<URI, Integer, Integer>{
 
 	ProgressDialog pd = null;
 	private final String TAG = getClass().getSimpleName();
@@ -47,7 +47,7 @@ public class DownloadFileTask extends AsyncTask<URI, Integer, Void>{
 	protected void onPreExecute()
 	{
 		// Show progressDialog
-		pd = new ProgressDialog(Main.context);
+		pd = new ProgressDialog(Main.mContext);
 		pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		pd.setTitle("ProgressDialog");
 		pd.setMessage("Download file ...");
@@ -55,20 +55,22 @@ public class DownloadFileTask extends AsyncTask<URI, Integer, Void>{
 	}
 	
 	@Override
-	protected Void doInBackground(final URI... uris) {
+	protected Integer doInBackground(final URI... uris) {
 		
 		urlFile = uris[0].toString();	
 		Log.d(TAG, urlFile);
 		
 		try {
-			file = downloadFile(new URL(urlFile), Environment.getExternalStorageDirectory().toString());
+			file = downloadFile(new URL(urlFile),
+					Environment.getExternalStorageDirectory().toString());
 		} catch (MalformedURLException e) {
 			Log.e(TAG, e.getMessage());
+			return -1;
 		} catch (IOException e) {
-			Log.e(TAG, e.getMessage());				
+			return -1;				
 		}
 		
-		return null;
+		return 1;
 	}
 
 	@Override
@@ -77,10 +79,15 @@ public class DownloadFileTask extends AsyncTask<URI, Integer, Void>{
     }
 	
 	@Override
-    protected void onPostExecute(Void unused)
+    protected void onPostExecute(Integer result)
     {
     	pd.dismiss();
-    	Toast.makeText(Main.context, urlFile + " downloaded correctly in " + file , Toast.LENGTH_LONG).show();
+    	
+    	if (result == 1)    	
+    		Toast.makeText(Main.mContext, urlFile + " downloaded correctly in " + file , Toast.LENGTH_LONG).show();    	
+    	else
+    		Toast.makeText(Main.mContext, "Download error file: " +  urlFile  , Toast.LENGTH_LONG).show();
+    		
     }
 	
 	

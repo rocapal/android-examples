@@ -6,8 +6,16 @@
     <string name="title_activity_main">AsyncTask-ProgressDialog</string>
 
     <string name="download_file">Download file</string>
+    <string name="button_test">Test Progress</string>
+    <string name="button_timertask">TimerTask</string>
+    <string name="button_thread">Thread</string>
+    <string name="button_thread_handler">Thread-Handle</string>
+    
+    <string name="toast_msg">Showing message each %1$d seconds</string>
+    <string name="toast_msg_thread">Showing just one message</string>
+    <string name="toast_msg_thread_handler">Thread executed %1$d seconds ago</string>
+    
     
     <string name="license">Copyright &#169; Roberto Calvo Palomino\nEstos ejemplos y su código fuente está licenciados bajo GPLv3 (http://www.gnu.org/licenses/). Open Source Software!</string>
-    
     
 </resources>

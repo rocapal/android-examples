@@ -22,6 +22,39 @@
 
 package es.curso.android.asyncTask;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
+import android.app.Activity;
+import android.content.Context;
+import android.widget.Toast;
 
+public class MyThread extends Thread {
+	
+	private Context mContext;
+	
+	public Boolean shouldContinue = true;
+	
+	public MyThread() {};
+	
+	public void setContext (Context ctx)
+	{
+		mContext = ctx;
+	}
+	
+	@Override
+	public void run() {		
+		
+		if (!shouldContinue)
+			return;
+		
+		((Activity) mContext).runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+								
+				Toast.makeText(mContext, 
+						   mContext.getString(R.string.toast_msg_thread), 
+						   Toast.LENGTH_SHORT).show();								
+			}
+		});
+	}
+
+}
