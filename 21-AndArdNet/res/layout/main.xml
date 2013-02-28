@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"    
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    tools:context=".Main" >
+	
+	    <TextView
+	        android:id="@+id/tvStatus"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"     
+	        android:layout_gravity="center"  
+	         />
+	    
+	    <Button 
+	        android:id="@+id/btLed"
+	        android:layout_gravity="center"  
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" 
+	        />
+	    
+	    
+	   
+	</LinearLayout>
+	
+	
+	<TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text ="@string/license"
+	        android:textColor="#000000"
+	        android:textSize="10dip"
+	        android:layout_alignParentBottom="true"        
+		/>
+
+</RelativeLayout>
