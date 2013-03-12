@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:keepScreenOn="true">
+
+   	<VideoView
+		android:id="@+id/vv"
+		android:layout_width="320dip"
+		android:layout_height="240dip"
+		android:layout_marginTop="10dip"
+		android:layout_marginBottom="20dip"
+	/>
+	
+	
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:padding="10dip"
+	    android:orientation="vertical"
+	    android:gravity="center_horizontal">
+		<TextView
+			android:id="@+id/record_tv" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:text="00:00"
+			android:textStyle="bold"
+			android:textSize="30dip">
+		</TextView>
+		
+		<ProgressBar 
+			android:id="@+id/record_pb" 
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:paddingTop="10dip"
+			style="?android:attr/progressBarStyleHorizontal">
+		</ProgressBar>
+		
+		<LinearLayout
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+		    android:padding="10dip"
+		    android:orientation="horizontal"
+		    android:gravity="center">
+			<ImageButton
+				android:id="@+id/record_button_play"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/play_48"
+			>
+			</ImageButton>
+			<ImageButton
+				android:id="@+id/record_button_record"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/record_48"
+			>
+			</ImageButton>
+			<ImageButton
+				android:id="@+id/record_button_stop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/stop_48"
+			>
+			</ImageButton>
+		</LinearLayout>
+	</LinearLayout>
+	
+   
+
+	
+
+</LinearLayout>
