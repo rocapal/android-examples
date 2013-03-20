@@ -22,8 +22,12 @@
 package es.curso.android.arduino.bluetooth;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 import android.app.ListActivity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -31,7 +35,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +61,6 @@ public class Main extends ListActivity {
 	private BluetoothAdapter mBluetoothAdapter = null;
 	private BroadcastReceiver mReceiver = null;
 	private ProgressDialog mProgressDialog = null;
-	private BluetoothDevice mDevice = null;
 	
 	private ArduinoBT mArduinoBT = null;
 	
@@ -67,12 +74,22 @@ public class Main extends ListActivity {
 	private TextView tvLog;
 	private ScrollView sv;
 	
+	private BluetoothDevice bDevice; 
+	
+	private static Timer mTimer = null;
+	private static DoorTask mDtask = null;
+	
+    private NotificationManager mNM;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		setContentView(R.layout.main);
 		
-		setupWidgets();		
+		mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+		mNM.cancel(1);
+		
+		setupWidgets();				
 		
 		// Init Bluetooth
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -86,19 +103,131 @@ public class Main extends ListActivity {
 		    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 		    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 		}
-		else
-		{
+		else		
 			startScan();
-		}						
+						
+				
 	}	
+	
+	
+	/* 
+	 * Handler to notify that door is open.
+	 * This handler is used by DoorTask
+	 */
+	private Handler notifyHandler = new Handler(new Handler.Callback() {
+		
+		@Override
+		public boolean handleMessage(Message msg) {
+			showNotification();
+			return true;
+		}
+	});
+	
+	/*
+	 * AsyncTask to try to connect with bluetooth device
+	 */
+	private class ConnectTask extends AsyncTask<Void,Void,Integer>
+	{
+		ProgressDialog pd;
+		
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			
+			pd = ProgressDialog.show(Main.this, "Conectando", "Conectando BT ...");
+			
+		}
+
+		@Override
+		protected Integer doInBackground(Void... params) {
+			
+			if (mArduinoBT!= null && mArduinoBT.connect())
+				return 1;
+			else
+				return 0;
+						
+		}
+		
+		@Override
+		protected void onPostExecute(Integer result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+			if (pd.isShowing())
+				pd.dismiss();
+			
+			if (result == 1)
+			{
+				tvStatus.setText(getResources().getString(R.string.bt_connected) 
+						         + " " + bDevice.getName() );
+				screenlog("Connected to " + bDevice.getName() );				
+			}
+			else
+				tvStatus.setText(getResources().getString(R.string.bt_not_connected) 
+								 + " " + bDevice.getName() );
+			
+			
+		}
+		
+	}
+	
+	
+	private void launchTimerTask()
+	{
+		if (mTimer==null && mDtask==null)
+		{
+			// Launch TimerTask
+			mTimer = new Timer();
+								
+			mDtask = new DoorTask(mArduinoBT, notifyHandler);						
+			
+			mTimer.schedule(mDtask, 0, 4000);
+						
+			
+		}
+	}
+	
+	private void cancelTimerTask()
+	{
+		// Cancelamos tarea 
+		if (mDtask != null)
+			mDtask.cancel();
+
+		// Desplanificar el timer
+		if (mTimer != null)
+			mTimer.purge();
+		
+		mDtask = null;
+		mTimer = null;
+	}
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		
+		cancelTimerTask();
+	}
+	
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		
+		if (mArduinoBT != null)
+			launchTimerTask();
+	}
 			
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
-		super.onDestroy();
+		super.onDestroy();				
 		
+		cancelTimerTask();
+				
 		if (mArduinoBT != null)
-			mArduinoBT.disconnect();
+			mArduinoBT.disconnect();				
 		
 		if (mReceiver != null)
 			unregisterReceiver(mReceiver);
@@ -120,6 +249,8 @@ public class Main extends ListActivity {
 			public void onClick(View v) {
 				if (mArduinoBT != null)
 				{
+					cancelTimerTask();
+					
 					mArduinoBT.disconnect();
 					mArduinoBT = null;
 					
@@ -133,13 +264,9 @@ public class Main extends ListActivity {
 		ibLed.setOnClickListener( new OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
-				if (mArduinoBT != null)
-				{
-					screenlog("Sending LedBlink Byte: 'L'");
-					mArduinoBT.send("L");						
-				}
-				
+			public void onClick(View v) 
+			{
+				sendLedRequest();
 			}
 		});
 		
@@ -147,24 +274,9 @@ public class Main extends ListActivity {
 		ibDoor.setOnClickListener( new OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
-				if (mArduinoBT != null)
-				{	
-					screenlog("Sending DoorSensor Byte: 'D'");
-					mArduinoBT.send("D");					
-										
-					byte[] response = new byte[1];
-					response = mArduinoBT.receive(1);
-					if (response == null)
-					{
-						screenlog("Receiving DoorSensor: Error - NULL");
-					}
-					else
-					{
-						screenlog("Receiving DoorSensor: " + (response[0]==0 ? "Open (0)" : "Close (1)") );
-					}
-				}
-				
+			public void onClick(View v) 
+			{
+				sendDoorRequest();
 			}
 		});
 	}
@@ -175,20 +287,16 @@ public class Main extends ListActivity {
 		
 		super.onListItemClick(l, v, position, id);
 		
-		BluetoothDevice bDevice = mDeviceList.get(position);		
+		bDevice = mDeviceList.get(position);
 		
 		if (mArduinoBT == null)
 		{
-			tvStatus.setText(getResources().getString(R.string.bt_connecting));
-			
+			tvStatus.setText(getResources().getString(R.string.bt_connecting));			
 			mArduinoBT = new ArduinoBT(bDevice);
-			if (mArduinoBT.connect())
-			{
-				tvStatus.setText(getResources().getString(R.string.bt_connected) + " " + bDevice.getName() );
-				screenlog("Connected to " + bDevice.getName() );
-			}
-			else
-				tvStatus.setText(getResources().getString(R.string.bt_not_connected) + " " + bDevice.getName() );
+			
+			ConnectTask cTask = new ConnectTask();
+			cTask.execute(null,null,null);
+			
 		}
 		else
 		{
@@ -212,6 +320,7 @@ public class Main extends ListActivity {
 				// Bluetooth was not enabled due to an error (or the user responded "No") 
 				Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
 			}
+				
 	}
 	
 	private void screenlog (String log)
@@ -219,7 +328,8 @@ public class Main extends ListActivity {
 		tvLog.setText(tvLog.getText() + "\n" + log);
 		
 		// Each time you change the TextView 
-		// you must force the FOCUS_DOWN of ScrollView
+		// you must force the FOCUS_DOWN of ScrollView			
+		
 		sv.post(new Runnable() 
 		{
 	         public void run() {
@@ -244,7 +354,8 @@ public class Main extends ListActivity {
 				if (BluetoothDevice.ACTION_FOUND.equals(action)) 
 				{
 					// Get the BluetoothDevice object from the Intent
-					BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+					BluetoothDevice device = 
+							intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 					
 					Log.d(TAG, device.getName() + "\n" + device.getAddress());
 					
@@ -270,6 +381,84 @@ public class Main extends ListActivity {
 		filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		registerReceiver(mReceiver, filter);
 	}	
+	
+	private void sendDoorRequest ()
+	{
+
+		if (mArduinoBT != null)
+		{
+
+			screenlog("Sending DoorSensor Byte: 'D'");
+
+			final Handler handler = new Handler(new Callback() {
+
+				@Override
+				public boolean handleMessage(Message msg) {
+
+					if (msg.what == -1)
+						screenlog("Receiving DoorSensor: Error - NULL");
+					else
+						screenlog("Receiving DoorSensor: " +
+								(msg.what==0 ? "Open (0)" : "Close (1)") );
+
+					return true;
+				}
+			});
+
+			Thread th = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					mArduinoBT.send("D");
+
+					byte[] response = new byte[1];
+					response = mArduinoBT.receive(1);
+
+					Message msg = new Message();
+
+					if (response == null)
+						msg.what = -1;
+					else
+						msg.what = response[0];
+
+					handler.sendMessage(msg);
+				}
+			});
+
+			th.start();					
+		}
+	}
+	
+	private void sendLedRequest()
+	{
+
+		if (mArduinoBT != null)
+		{
+			screenlog("Sending LedBlink Byte: 'L'");
+
+			final Handler handler = new Handler(new Callback() {
+
+				@Override
+				public boolean handleMessage(Message msg) {
+					screenlog("Sent LedBlink Byte: 'L'");
+					return true;
+				}
+			});
+
+			Thread th = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					mArduinoBT.send("L");
+					handler.sendEmptyMessage(0);
+				}
+			});
+
+			th.start();	
+
+		}
+	}
+	
 	
 	public class MyAdapter extends BaseAdapter
 	{
@@ -327,6 +516,37 @@ public class Main extends ListActivity {
 		}
 		
 	}
+	
+	 private void showNotification ()
+     {
+
+		 mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+
+			
+		 // In this sample, we'll use the same text for the ticker and the expanded notification
+		 CharSequence text = "Door Opened!!";
+
+		 // Set the icon, scrolling text and timestamp
+		 Notification notification = new Notification(R.drawable.yellowred,
+				 text,
+				 System.currentTimeMillis());
+
+		 //Create the intent to activity
+		 Intent iNotification = new Intent(this, new AlarmActivity().getClass() );
+		 iNotification.putExtra("DATE", System.currentTimeMillis());
+		 
+		 PendingIntent contentIntent = PendingIntent.getActivity
+				 (this, 0, iNotification, PendingIntent.FLAG_CANCEL_CURRENT);
+
+		 // Set the info for the views that show in the notification panel.        
+		 notification.setLatestEventInfo(this, "Alarm!", 
+				 						text, contentIntent);
+
+		 // Send the notification.
+		 // We use a layout id because it is a unique number.  We use it later to cancel.
+		 mNM.notify(1, notification);
+
+     }
 
 	
 }

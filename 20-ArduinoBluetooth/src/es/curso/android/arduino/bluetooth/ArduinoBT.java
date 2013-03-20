@@ -74,9 +74,15 @@ public class ArduinoBT {
 		}
 	}
 	
-	public void send (String data)
+	public void send (Integer data)
+	{
+		send(data.toString());
+	}
+	
+	public synchronized void send (String data)
 	{
 		try {
+			
 			mmOutputStream.write(data.getBytes());
 		} catch (IOException e) {
 			Log.e(TAG, e.getMessage());			
@@ -84,12 +90,13 @@ public class ArduinoBT {
 				
 	}
 	
+	
 	public byte[] receive (int numBytes)
 	{
 		byte[] b = new byte[numBytes];
 		try {
 			mmInputStream.read(b,0,numBytes);
-			Log.e(TAG, "Recv: " + String.valueOf(b[0]));
+			Log.d(TAG, "Recv: " + String.valueOf(b[0]));
 			return b;
 			
 		} catch (IOException e) {
