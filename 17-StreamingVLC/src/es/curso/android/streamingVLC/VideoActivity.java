@@ -22,8 +22,16 @@
 
 package es.curso.android.streamingVLC;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.videolan.libvlc.EventHandler;
 import org.videolan.libvlc.IVideoPlayer;
 import org.videolan.libvlc.LibVLC;
@@ -32,9 +40,11 @@ import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaList;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,15 +52,20 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.Toast;
 
-public class VideoActivity extends Activity implements SurfaceHolder.Callback, IVideoPlayer {
+public class VideoActivity extends Activity implements SurfaceHolder.Callback, 
+													   IVideoPlayer {
 	
     public final static String TAG = "streamingVLC/VideoActivity";
 
     private String mFilePath;
 
+    private Button btStart, btStop;
  
     private SurfaceView mSurface;
     private SurfaceHolder holder;
@@ -67,9 +82,34 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback, I
         setContentView(R.layout.sample);
                
         //mFilePath = Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera/VID_20131226_195102.mp4";
-        mContext = this;
+        //mFilePath = LibVLC.PathToURI("http://10.15.181.28:8090");  
         
-        mFilePath = LibVLC.PathToURI("http://192.168.1.131:8010/?action=stream");       
+        mContext = this;
+             
+        
+        btStart = (Button) this.findViewById(R.id.btStart);
+        btStop = (Button) this.findViewById(R.id.btStop);
+        
+        btStart.setOnClickListener( new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				MyTask task = new MyTask();
+				task.execute();
+				
+			}
+		});
+        
+        btStop.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				stopStreaming();
+				releasePlayer();
+			}
+		});
         
         Log.d(TAG, "Playing back " + mFilePath);
 
@@ -77,9 +117,104 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback, I
         
         holder = mSurface.getHolder();
         holder.addCallback(this);
+        
+        createPlayer("tcp://193.147.15.72:8888/");
       
     }
+    
+    private void stopStreaming()
+    {
+    	Thread th = new Thread(new Runnable() {
 
+    		@Override
+    		public void run() {
+
+    			doGetPetition("http://10.15.181.28:8000/streaming/stop/");
+
+    		}
+    	});
+
+    	th.start();
+
+    	try {
+    		th.join(3000);
+    	} catch (InterruptedException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+
+		
+    }
+
+    public class MyTask extends AsyncTask<Void, Void, Void>
+    {
+    	ProgressDialog pd;
+    	String mStreamingUrl;
+    	
+    	@Override
+    	protected void onPreExecute() {
+    		// TODO Auto-generated method stub
+    		super.onPreExecute();
+    		
+    		pd = ProgressDialog.show(mContext, "Start Streaming", "Start Streaming");
+    	}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			
+			String jsonStr = doGetPetition("http://10.15.181.28:8000/streaming/start/");
+			try {
+				JSONObject json = new JSONObject(jsonStr);
+				if (json.has("streaming_url"))
+					mStreamingUrl = json.getString("streaming_url");
+				
+				Thread.sleep(6000);
+				
+			} catch (JSONException e) {				
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+    	
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+			if (pd.isShowing())
+				pd.cancel();
+			
+			createPlayer(LibVLC.PathToURI(mStreamingUrl));
+			
+		}
+    }
+    
+    
+    private String doGetPetition (String url)
+	{
+		
+		try
+		{
+			DefaultHttpClient httpclient = new DefaultHttpClient();
+			HttpGet httpGet = null;
+
+			httpGet = new HttpGet(url);
+			HttpResponse response = httpclient.execute(httpGet);
+			HttpEntity entity = response.getEntity();
+
+			String str = EntityUtils.toString(entity);
+			
+			return str;
+
+		}catch (IOException e) {
+			Log.e("doGet",e.getMessage());
+			return null;
+		}	
+	}			
+    
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -88,16 +223,15 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback, I
 
     @Override
     protected void onResume() {
-        super.onResume();
-                
-        
-        createPlayer(mFilePath);
+        super.onResume();            
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        releasePlayer();
+        
+        stopStreaming();
+        destroyPlayer();
     }
 
     @Override
@@ -211,8 +345,20 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback, I
     private void releasePlayer() {
         if (libvlc == null)
             return;
+        
         EventHandler.getInstance().removeHandler(mHandler);
         libvlc.stop();
+        
+    }
+    
+    private void destroyPlayer()
+    {
+    	if (libvlc == null)
+            return;
+        
+        EventHandler.getInstance().removeHandler(mHandler);
+        libvlc.stop();
+                
         libvlc.detachSurface();
         holder = null;
         libvlc.closeAout();
@@ -221,7 +367,9 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback, I
 
         mVideoWidth = 0;
         mVideoHeight = 0;
+       
     }
+    
 
     /*************
      * Events
