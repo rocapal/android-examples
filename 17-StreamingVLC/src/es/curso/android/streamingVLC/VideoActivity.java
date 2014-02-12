@@ -118,7 +118,7 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback,
         holder = mSurface.getHolder();
         holder.addCallback(this);
         
-        createPlayer("tcp://193.147.15.72:8888/");
+        createPlayer("tcp://YOUR_IP:8888/");
       
     }
     
