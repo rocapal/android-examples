@@ -25,11 +25,12 @@ package es.curso.android.asyncTask;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,29 +43,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-
-
-
 public class Main extends Activity {
 
 	private final String TAG = getClass().getSimpleName();	
 	public static Context mContext = null;
 	
 	private TextView tvTitle;
-	private final Integer TIMER_TASK_DELAY = 1000;
-	private final Integer TIMER_TASK_PERIOD = 5000;
+	private final Integer TIMER_TASK_DELAY = 1000;	
 
-	private Timer mTimer;
+	private Timer mTimer = null;
 	private MyTimerTask mTimerTask = null;
+	
 	private MyThread mThread = null;
 	private MyThreadHandler mThreadHandler = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        
+        setContentView(R.layout.main);       	
+		
         mContext = this;            
         tvTitle = (TextView) this.findViewById(R.id.tvTitle);
         
@@ -75,20 +72,28 @@ public class Main extends Activity {
         
     }
     
+    @Override
+    protected void onResume() {
+    	// TODO Auto-generated method stub
+    	super.onResume();
+    	
+    	//
+    	
+    }
     
     private void setupWidgets ()
     {
         
     	// AsynTask
         Button btFile = (Button) this.findViewById(R.id.btFile);
-        btFile.setOnClickListener(new OnClickListener() {
+        btFile.setOnClickListener(new OnClickListener() { 
 			
 			@Override
 			public void onClick(View v) {
 				
 				final DownloadFileTask task = new DownloadFileTask();				                
                 try {
-					task.execute(new URI("https://github.com/rocapal/android-examples/archive/master.zip"), null, null);
+                	task.execute(new URI("https://codeload.github.com/rocapal/android-examples/zip/master"), null, null);
 					
 				} catch (URISyntaxException e) {
 					Log.d(TAG, e.getMessage());
@@ -116,11 +121,15 @@ public class Main extends Activity {
 			public void onClick(View v) {
 				// TimerTask				
 				
-				mTimer = new Timer();
-				mTimerTask = new MyTimerTask();
-				mTimerTask.setContext(mContext);
-				mTimer.schedule(mTimerTask, TIMER_TASK_DELAY, TIMER_TASK_PERIOD);
+				mTimer= new Timer();
+				
+				mTimerTask = new MyTimerTask(mContext);				
+				
+				mTimer.schedule(mTimerTask, TIMER_TASK_DELAY, 
+											MyTimerTask.TIMER_TASK_PERIOD);
 			}
+			
+			
 		});
         
         // Thread
@@ -148,9 +157,11 @@ public class Main extends Activity {
 		        mThreadHandler.setHandler(myHandler);
 		        mThreadHandler.run();
 			}
-		});        
-        
+		});                
     }             
+    
+    
+    
     
     // Handler
     Handler myHandler = new Handler(new Callback() {
@@ -158,22 +169,27 @@ public class Main extends Activity {
 		@Override
 		public boolean handleMessage(Message msg) {
 			
-			Toast.makeText(mContext, getString(R.string.toast_msg_thread_handler, msg.what), Toast.LENGTH_SHORT).show();
+			Toast.makeText(mContext, 
+					getString(R.string.toast_msg_thread_handler, 
+							msg.what), 
+							Toast.LENGTH_SHORT).show();
 			return true;
 		}
 	});
+    
+    
        
-        
+     
     @Override
     protected void onPause() {    	
     	super.onPause();
+    	
     	// Stop TimerTask
     	if (mTimerTask != null)
     		mTimerTask.cancel();
     	
     	if (mTimer != null)
     		mTimer.purge();
-
     		
     	// Stop Thread
     	if (mThread != null)
@@ -200,6 +216,8 @@ public class Main extends Activity {
     
     
     
+
+    
     // This asyncTasks is an example of use. Just it shows de progress dialog
     // by 3 seconds and then close the progress dialog.
     public class MyAsyncTask extends AsyncTask<Void, Void, Void>{
@@ -208,9 +226,12 @@ public class Main extends Activity {
     	
     	protected void onPreExecute()
     	{
-    		pd = ProgressDialog.show(Main.this, "AsyncTask Example", 
-    											"Initializing ...");
-    		    		
+    		pd = ProgressDialog.show(mContext, "AsyncTask Example", 
+    											"Initializing ...", true, true);
+    		
+    		
+    		    	
+    		
     	}
     	
     	@Override
@@ -246,8 +267,7 @@ public class Main extends Activity {
     	{
     		
     		tvTitle.setText("Descargando fichero ...");
-    		pd = ProgressDialog.show(Main.this, "AsyncTask Example", 
-    											"Initializing ...");
+    		pd = ProgressDialog.show(Main.this, "AsyncTask Example", "Initializing ...", true, true);
     	}
     	
     	@Override

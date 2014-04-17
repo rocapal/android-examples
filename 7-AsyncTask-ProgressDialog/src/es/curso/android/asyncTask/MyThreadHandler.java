@@ -57,6 +57,7 @@ public class MyThreadHandler extends Thread {
 		msg.what = c * (DELAY/1000);
 		mHandler.sendMessage(msg);	
 		
+		
 		c = c + 1;
 		
 		// Programming the next execution

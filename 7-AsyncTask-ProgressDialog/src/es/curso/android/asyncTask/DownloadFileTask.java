@@ -58,11 +58,13 @@ public class DownloadFileTask extends AsyncTask<URI, Integer, Integer>{
 	protected Integer doInBackground(final URI... uris) {
 		
 		urlFile = uris[0].toString();	
-		Log.d(TAG, urlFile);
+		Log.d(TAG, urlFile);			
+		
+		
 		
 		try {
 			file = downloadFile(new URL(urlFile),
-					Environment.getExternalStorageDirectory().toString());
+			Environment.getExternalStorageDirectory().toString());
 		} catch (MalformedURLException e) {
 			Log.e(TAG, e.getMessage());
 			return -1;
@@ -76,6 +78,7 @@ public class DownloadFileTask extends AsyncTask<URI, Integer, Integer>{
 	@Override
 	protected void onProgressUpdate(final Integer... progress) {
         pd.setProgress(progress[0]);
+     
     }
 	
 	@Override
@@ -83,7 +86,8 @@ public class DownloadFileTask extends AsyncTask<URI, Integer, Integer>{
     {
     	pd.dismiss();
     	
-    	if (result == 1)    	
+    	
+    	if (result == 1)
     		Toast.makeText(Main.mContext, urlFile + " downloaded correctly in " + file , Toast.LENGTH_LONG).show();    	
     	else
     		Toast.makeText(Main.mContext, "Download error file: " +  urlFile  , Toast.LENGTH_LONG).show();

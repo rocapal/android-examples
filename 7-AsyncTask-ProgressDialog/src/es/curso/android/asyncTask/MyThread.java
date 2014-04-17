@@ -42,19 +42,23 @@ public class MyThread extends Thread {
 	@Override
 	public void run() {		
 		
-		if (!shouldContinue)
-			return;
 		
-		((Activity) mContext).runOnUiThread(new Runnable() {
+		
+			if (!shouldContinue)
+				return;
+
+			((Activity) mContext).runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+
+					Toast.makeText(mContext, 
+							mContext.getString(R.string.toast_msg_thread), 
+							Toast.LENGTH_SHORT).show();								
+				}
+			});
 			
-			@Override
-			public void run() {
-								
-				Toast.makeText(mContext, 
-						   mContext.getString(R.string.toast_msg_thread), 
-						   Toast.LENGTH_SHORT).show();								
-			}
-		});
-	}
+			
+		}
 
 }

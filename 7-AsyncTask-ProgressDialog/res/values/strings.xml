@@ -11,7 +11,10 @@
     <string name="button_thread">Thread</string>
     <string name="button_thread_handler">Thread-Handle</string>
     
+    
     <string name="toast_msg">Showing message each %1$d seconds</string>
+    
+    
     <string name="toast_msg_thread">Showing just one message</string>
     <string name="toast_msg_thread_handler">Thread executed %1$d seconds ago</string>
     

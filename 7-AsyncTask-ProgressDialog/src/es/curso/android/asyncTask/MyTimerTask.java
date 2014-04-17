@@ -30,27 +30,24 @@ import android.widget.Toast;
 public class MyTimerTask extends TimerTask {
 
 	
-
-	
-	
-	
 	
 	Context mContext;
-	private final Integer TIMER_TASK_PERIOD = 5000;
+	public static final Integer TIMER_TASK_PERIOD = 5000;
 	
-	public void setContext (Context ctx)
+	public MyTimerTask (Context ctx)
 	{
 		mContext = ctx;
 	}
 	
 	@Override
-	public void run() {
+	public void run() {	
+		
 		((Activity) mContext).runOnUiThread(new Runnable() {
 			
 			@Override
 			public void run() {
 				Toast.makeText(mContext, 
-						   mContext.getString(R.string.toast_msg, TIMER_TASK_PERIOD/1000 ), 
+						   mContext.getString(R.string.toast_msg,  TIMER_TASK_PERIOD/1000, 2, 3, 4 ), 
 						   Toast.LENGTH_SHORT).show();
 				
 			}
