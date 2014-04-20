@@ -1,0 +1,142 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dip"
+        android:textSize="18sp" />
+    
+    <TableLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    >
+    
+	    <TableRow
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        >
+	        
+	        <TextView
+	        	android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:text="@string/text_name" />
+	        
+	        <EditText 
+	            android:id="@+id/etName"
+	            android:hint="Enter name"
+	            android:layout_width="200dp"
+	        	android:layout_height="wrap_content"/>
+	        
+	    </TableRow>
+	    
+	    <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+	        
+	        <TextView
+	        	android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:text="@string/text_email" />
+	        
+	        <EditText 
+	            android:id="@+id/etEmail"
+	            android:hint="Enter email"
+	            android:inputType="textEmailAddress"
+	            android:layout_width="200dp"
+	        	android:layout_height="wrap_content"/>
+	        
+	        
+        </TableRow>
+        	   
+     </TableLayout>
+     
+    
+    <Button 
+        android:id="@+id/btAdd"
+        android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center"
+	    android:text="@string/bt_add"
+        />
+    
+     <View
+        android:layout_marginTop="5dip"
+        android:layout_marginBottom="5dip"
+        android:layout_width="match_parent"
+        android:layout_height="2dip"
+        android:background="#000000" />
+     
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center"
+         android:orientation="vertical" >
+	    
+         <TableLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center"
+		    >
+		    
+			    <TableRow
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        >
+			        
+			        <TextView
+			        	android:layout_width="wrap_content"
+			        	android:layout_height="wrap_content"
+			        	android:text="@string/text_search" />
+			        
+			        <EditText 
+			            android:id="@+id/etSearchName"
+			            android:hint="Enter name"
+			            android:layout_width="200dp"
+			        	android:layout_height="wrap_content"/>
+			        
+			    </TableRow>
+			    
+			    <TableRow>
+			        
+			        <TextView
+			        	android:layout_width="wrap_content"
+			        	android:layout_height="wrap_content"
+			        	android:text="@string/text_search_date" />
+			        
+			        <CheckBox 
+			            android:id="@+id/cbDateSearch"
+			            android:layout_width="wrap_content"
+			        	android:layout_height="wrap_content"/>
+			        
+				</TableRow>
+		</TableLayout>
+		
+         <Button 
+	        android:id="@+id/btsearch"
+	        android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center"
+		    android:text="@string/bt_search"
+	        />
+	</LinearLayout>
+	
+     <ScrollView
+         android:layout_width="match_parent"
+		 android:layout_height="match_parent">
+    
+	    <TextView 
+	        android:id="@+id/tvPanel"
+	        android:layout_width="match_parent"
+	   		android:layout_height="match_parent"  
+	   		android:textSize="10sp"	
+	   		android:scrollbars="vertical"
+	   		/>    
+     </ScrollView>
+</LinearLayout>
