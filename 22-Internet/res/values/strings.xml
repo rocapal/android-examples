@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">22-Internet</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="bt_wifi_settings">Wifi Settings</string>
+    <string name="bt_mobile_settings">Mobile Settings</string>
+    <string name="bt_download_file">Get</string>
+    <string name="bt_download_file_asyntTask">AsyncTask</string>
+</resources>
